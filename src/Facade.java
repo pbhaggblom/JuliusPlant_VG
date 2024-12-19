@@ -48,6 +48,4 @@ public class Facade {
         }
         kalender.gåTillMeny();
     }
-
-
 }
