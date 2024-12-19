@@ -1,11 +1,10 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Kalender extends Sida {
 
-    ArrayList<Object> bokningar;
+    ArrayList<Bokning> bokningar;
     List<LocalDate> ledigaTider;
     FilManager manager;
     String filnamn = "bokningar.ser";
@@ -16,8 +15,7 @@ public class Kalender extends Sida {
 
     public int meny() {
         System.out.println("Vill du: \n1. Boka\n2. Avboka");
-        int val = Input.läsMenyVal(2);
-        return val;
+        return Input.läsMenyVal(2);
     }
 
     public void läsInBokningar() {
@@ -29,8 +27,7 @@ public class Kalender extends Sida {
         for (int i = 0; i < 7; i++) {
             LocalDate datum = LocalDate.now().plusDays(i);
             boolean datumHittades = false;
-            for (Object bokning : bokningar) {
-                Bokning b = (Bokning) bokning;
+            for (Bokning b : bokningar) {
                 if (b.getDatum().equals(datum)) {
                     datumHittades = true;
                     break;
@@ -61,16 +58,20 @@ public class Kalender extends Sida {
     public void avboka() {
         String mail = Input.läsAnvändarInput("Ange din mailadress: ");
         boolean bokningHittades = false;
+        ArrayList<Bokning> existerandeBokningar = new ArrayList<>();
         for (int i = 0; i < bokningar.size(); i++) {
             Bokning b = (Bokning) bokningar.get(i);
             if (b.getMail().equals(mail)) {
                 System.out.println("Din bokning " + b.getDatum() + " är avbokad");
+                existerandeBokningar.add(b);
                 bokningar.remove(i);
                 bokningHittades = true;
             }
         }
         if (!bokningHittades) {
             System.out.println("Hittade ingen bokning med angiven mailadress");
+        } else if (existerandeBokningar.size() > 1) {
+            System.out.println("Vilken bokning");
         }
 
         manager.skrivTillFil(filnamn, bokningar);

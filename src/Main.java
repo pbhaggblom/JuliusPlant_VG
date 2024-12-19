@@ -1,5 +1,3 @@
-import javax.sound.sampled.Port;
-
 public class Main {
 
     public Main() {
@@ -14,23 +12,27 @@ public class Main {
             visaMeny();
             int val = Input.läsMenyVal(5);
 
-            switch (val) {
-                case 1:
-                    fasad.visaPortfolio();
-                    break;
-                case 2:
-                    fasad.visaInformation();
-                    break;
-                case 3:
-                    fasad.recensionsMeny();
-                    break;
-                case 4:
-                    fasad.kalenderMeny();
-                    break;
-                case 5:
-                    System.exit(0);
-                default:
-                    throw new IllegalArgumentException();
+            try {
+                switch (val) {
+                    case 1:
+                        fasad.visaPortfolio();
+                        break;
+                    case 2:
+                        fasad.visaInformation();
+                        break;
+                    case 3:
+                        fasad.recensionsMeny();
+                        break;
+                    case 4:
+                        fasad.kalenderMeny();
+                        break;
+                    case 5:
+                        System.exit(0);
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Felaktigt argument i Input.läsMenyVal()");
             }
         }
     }

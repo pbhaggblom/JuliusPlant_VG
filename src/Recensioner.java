@@ -1,10 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Recensioner extends Sida {
 
-    ArrayList<Object> recensioner;
+    ArrayList<Recension> recensioner;
     FilManager manager;
     String filnamn = "recensioner.ser";
 
@@ -14,8 +12,7 @@ public class Recensioner extends Sida {
 
     public int meny() {
         System.out.println("Vill du:\n1. Läsa recensioner\n2. Skriva recension");
-        int val = Input.läsMenyVal(2);
-        return val;
+        return Input.läsMenyVal(2);
     }
 
     public void läsInRecensioner() {
@@ -34,14 +31,11 @@ public class Recensioner extends Sida {
     }
 
     public void läsRecension() {
-        for (Object o : recensioner) {
-            if (o instanceof Recension) {
-                Recension r = (Recension) o;
+        for (Recension r : recensioner) {
                 System.out.println("Namn: " + r.getNamn());
                 System.out.println("Titel: " + r.getTitel());
                 System.out.println("Recension: " + r.getText());
                 System.out.println(".....................................");
-            }
         }
     }
 }

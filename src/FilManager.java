@@ -8,14 +8,15 @@ public enum FilManager {
 
     INSTANCE;
 
-    public ArrayList<Object> läsFrånFil(String filnamn) {
+    @SuppressWarnings("unchecked")
+    public <T> ArrayList<T> läsFrånFil(String filnamn) {
         Path p = Paths.get(filnamn);
-        ArrayList<Object> lista = new ArrayList<>();
+        ArrayList<T> lista = new ArrayList<>();
         if (Files.exists(p)) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filnamn))) {
                 Object obj = ois.readObject();
                 if (obj instanceof ArrayList<?>) {
-                    lista = (ArrayList<Object>) obj;
+                    lista = (ArrayList<T>) obj;
                 }
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
@@ -24,7 +25,7 @@ public enum FilManager {
         return lista;
     }
 
-    public void skrivTillFil(String filnamn, ArrayList<Object> lista) {
+    public <T> void skrivTillFil(String filnamn, ArrayList<T> lista) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filnamn))) {
             oos.writeObject(lista);
         } catch (IOException e) {
