@@ -20,4 +20,8 @@ public class Bokning implements Serializable {
     public String getMail() {
         return mail;
     }
+
+    public String getNamn() {
+        return namn;
+    }
 }

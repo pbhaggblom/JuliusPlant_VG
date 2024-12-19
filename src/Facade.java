@@ -38,11 +38,13 @@ public class Facade {
     public void kalenderMeny() {
         kalender.läsInBokningar();
         int val = kalender.meny();
+        kalender.hittaLedigaTider();
         if (val == 1) {
-            kalender.hittaLedigaTider();
             kalender.boka();
         } else if (val == 2) {
             kalender.avboka();
+        } else if (val == 3) {
+            kalender.omboka();
         } else {
             throw new IllegalArgumentException();
         }

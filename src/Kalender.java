@@ -14,8 +14,8 @@ public class Kalender extends Sida {
     }
 
     public int meny() {
-        System.out.println("Vill du: \n1. Boka\n2. Avboka");
-        return Input.läsMenyVal(2);
+        System.out.println("Vill du: \n1. Boka\n2. Avboka\n3. Omboka");
+        return Input.läsMenyVal(3);
     }
 
     public void läsInBokningar() {
@@ -40,12 +40,7 @@ public class Kalender extends Sida {
     }
 
     public void boka() {
-        for (int i = 0; i < ledigaTider.size(); i++) {
-            System.out.println((i + 1) + ": "+ ledigaTider.get(i));
-        }
-        System.out.println("Välj ett datum:");
-        int val = Input.läsMenyVal(ledigaTider.size());
-        LocalDate datum = ledigaTider.get(val - 1);
+        LocalDate datum = väljLedigTid();
 
         String namn = Input.läsAnvändarInput("Ange ditt namn: ");
         String mail = Input.läsAnvändarInput("Ange din mailadress: ");
@@ -57,23 +52,65 @@ public class Kalender extends Sida {
 
     public void avboka() {
         String mail = Input.läsAnvändarInput("Ange din mailadress: ");
-        boolean bokningHittades = false;
-        ArrayList<Bokning> existerandeBokningar = new ArrayList<>();
+        int index = hittaBokning(mail);
+        if (index == -1) {
+            return;
+        }
+        System.out.println("Din bokning " + bokningar.get(index).getDatum() + " avbokades.");
+        bokningar.remove(index);
+        manager.skrivTillFil(filnamn, bokningar);
+    }
+
+    public void omboka() {
+        String mail = Input.läsAnvändarInput("Ange din mailadress: ");
+        int index = hittaBokning(mail);
+        if (index == -1) {
+            return;
+        }
+        String namn = bokningar.get(index).getNamn();
+        LocalDate avbokadTid = bokningar.get(index).getDatum();
+        bokningar.remove(index);
+        LocalDate datum = väljLedigTid();
+        bokningar.add(new Bokning(datum, namn, mail));
+        System.out.println("Du ändrade din bokning från " + avbokadTid + " till " + datum);
+        manager.skrivTillFil(filnamn, bokningar);
+    }
+
+    public int hittaBokning(String mail) {
+        ArrayList<Integer> existerandeBokningar = new ArrayList<>();
+        int index = -1;
         for (int i = 0; i < bokningar.size(); i++) {
-            Bokning b = (Bokning) bokningar.get(i);
+            Bokning b = bokningar.get(i);
             if (b.getMail().equals(mail)) {
-                System.out.println("Din bokning " + b.getDatum() + " är avbokad");
-                existerandeBokningar.add(b);
-                bokningar.remove(i);
-                bokningHittades = true;
+                existerandeBokningar.add(i);
             }
         }
-        if (!bokningHittades) {
-            System.out.println("Hittade ingen bokning med angiven mailadress");
+        if (existerandeBokningar.isEmpty()) {
+            System.out.println("Hittade inga bokningar");
         } else if (existerandeBokningar.size() > 1) {
-            System.out.println("Vilken bokning");
+            int b = väljBokning(existerandeBokningar);
+            return existerandeBokningar.get(b - 1);
+        } else {
+            return existerandeBokningar.getFirst();
         }
+        return index;
+    }
 
-        manager.skrivTillFil(filnamn, bokningar);
+    public int väljBokning(ArrayList<Integer> lista) {
+        System.out.println("Vilken bokning avser ärendet?");
+        for (int i = 0; i < lista.size(); i++) {
+            int index = lista.get(i);
+            System.out.println((i + 1) + ": "+ bokningar.get(index).getDatum());
+        }
+        return Input.läsMenyVal(lista.size());
+    }
+
+    public LocalDate väljLedigTid() {
+        for (int i = 0; i < ledigaTider.size(); i++) {
+            System.out.println((i + 1) + ": "+ ledigaTider.get(i));
+        }
+        System.out.println("Välj ett datum:");
+        int val = Input.läsMenyVal(ledigaTider.size());
+        return ledigaTider.get(val - 1);
     }
 }
