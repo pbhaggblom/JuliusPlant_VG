@@ -15,16 +15,19 @@ public class Kalender extends Sida {
         manager = FilManager.INSTANCE;
         manager.läsFrånFil(filnamn);
 
+
+
+
+    }
+
+    public int meny() {
         System.out.println("Vill du: \n1. Boka\n2. Avboka");
         int val = Input.läsMenyVal(2);
-        if (val == 1) {
-            boka();
-        } else if (val == 2) {
-            avboka();
-        } else {
-            throw new IllegalArgumentException();
-        }
+        return val;
+    }
 
+    public void läsInBokningar() {
+        bokningar = manager.läsFrånFil(filnamn);
     }
 
     public void boka() {

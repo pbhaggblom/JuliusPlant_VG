@@ -12,20 +12,19 @@ public class Recensioner extends Sida {
         recensioner = new ArrayList<>();
 
         manager = FilManager.INSTANCE;
-        recensioner = manager.läsFrånFil(filnamn);
 
-        System.out.println("Recensioner");
-        System.out.println("Vill du läsa (1) eller skriva (2) recension?");
-        int val = Input.läsMenyVal(2);
-        if (val == 1) {
-            läsRecension();
-        } else if (val == 2) {
-            skrivRecension();
-        } else {
-            throw new IllegalArgumentException();
-        }
+
     }
 
+    public int meny() {
+        System.out.println("Vill du läsa (1) eller skriva (2) recension?");
+        int val = Input.läsMenyVal(2);
+        return val;
+    }
+
+    public void läsInRecensioner() {
+        recensioner = manager.läsFrånFil(filnamn);
+    }
 
     public void skrivRecension() {
         Scanner scanner = new Scanner(System.in);
