@@ -9,15 +9,11 @@ public class Recensioner extends Sida {
     String filnamn = "recensioner.ser";
 
     public Recensioner() {
-        recensioner = new ArrayList<>();
-
         manager = FilManager.INSTANCE;
-
-
     }
 
     public int meny() {
-        System.out.println("Vill du läsa (1) eller skriva (2) recension?");
+        System.out.println("Vill du:\n1. Läsa recensioner\n2. Skriva recension");
         int val = Input.läsMenyVal(2);
         return val;
     }
@@ -27,21 +23,14 @@ public class Recensioner extends Sida {
     }
 
     public void skrivRecension() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Skriv ert namn: ");
-        String namn = scanner.nextLine();
-
-        System.out.println("Skriv titel: ");
-        String titel = scanner.nextLine();
-
-        System.out.println("Skriv recension: ");
-        String recension = scanner.nextLine();
+        String namn = Input.läsAnvändarInput("Skriv ert namn: ");
+        String titel = Input.läsAnvändarInput("Skriv titel: ");
+        String recension = Input.läsAnvändarInput("Skriv recension: ");
 
         Recension r = new Recension(namn, titel, recension);
         recensioner.add(r);
 
         manager.skrivTillFil(filnamn, recensioner);
-
     }
 
     public void läsRecension() {

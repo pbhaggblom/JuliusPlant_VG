@@ -6,18 +6,12 @@ import java.util.Scanner;
 public class Kalender extends Sida {
 
     ArrayList<Object> bokningar;
+    List<LocalDate> ledigaTider;
     FilManager manager;
     String filnamn = "bokningar.ser";
 
-
     public Kalender() {
-        bokningar = new ArrayList<>();
         manager = FilManager.INSTANCE;
-        manager.läsFrånFil(filnamn);
-
-
-
-
     }
 
     public int meny() {
@@ -30,10 +24,9 @@ public class Kalender extends Sida {
         bokningar = manager.läsFrånFil(filnamn);
     }
 
-    public void boka() {
-        List<LocalDate> ledigaTider = new ArrayList<>();
+    public void hittaLedigaTider() {
+        ledigaTider = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-
             LocalDate datum = LocalDate.now().plusDays(i);
             boolean datumHittades = false;
             for (Object bokning : bokningar) {
@@ -47,21 +40,18 @@ public class Kalender extends Sida {
                 ledigaTider.add(datum);
             }
         }
+    }
+
+    public void boka() {
         for (int i = 0; i < ledigaTider.size(); i++) {
             System.out.println((i + 1) + ": "+ ledigaTider.get(i));
         }
-
         System.out.println("Välj ett datum:");
-        Scanner scan = new Scanner(System.in);
-
-        int val = Input.läsMenyVal(ledigaTider.size() - 1);
+        int val = Input.läsMenyVal(ledigaTider.size());
         LocalDate datum = ledigaTider.get(val - 1);
 
-        System.out.print("Ange ditt namn: ");
-        String namn = scan.nextLine();
-
-        System.out.print("Ange din mailadress: ");
-        String mail = scan.nextLine();
+        String namn = Input.läsAnvändarInput("Ange ditt namn: ");
+        String mail = Input.läsAnvändarInput("Ange din mailadress: ");
 
         bokningar.add(new Bokning(datum, namn, mail));
         manager.skrivTillFil(filnamn, bokningar);
@@ -69,9 +59,7 @@ public class Kalender extends Sida {
     }
 
     public void avboka() {
-        System.out.println("Ange din mailadress: ");
-        Scanner scan = new Scanner(System.in);
-        String mail = scan.nextLine();
+        String mail = Input.läsAnvändarInput("Ange din mailadress: ");
         boolean bokningHittades = false;
         for (int i = 0; i < bokningar.size(); i++) {
             Bokning b = (Bokning) bokningar.get(i);

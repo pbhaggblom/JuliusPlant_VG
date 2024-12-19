@@ -19,7 +19,7 @@ public class Input {
         return val;
     }
 
-    public String läsAnvändarInput(String prompt) {
+    public static String läsAnvändarInput(String prompt) {
         Scanner scan = new Scanner(System.in);
         System.out.println(prompt);
         return scan.nextLine();

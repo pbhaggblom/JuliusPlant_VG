@@ -5,8 +5,7 @@ public class Portfolio extends Sida {
             "särskilt genom att fånga kärlekshistorier och oförglömliga minnen.\n" +
             "Jag utgår från Stockholm men reser gärna för att ta sig an olika typer av uppdrag.";
 
-
-    public Portfolio() {
+    public void skrivUtPortfolio() {
         System.out.println("Portfolio:\n" + juliusPlant );
     }
 }

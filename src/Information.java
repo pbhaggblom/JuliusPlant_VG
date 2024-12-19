@@ -6,8 +6,7 @@ public class Information extends Sida {
     String prislista = "Priser: \n- Bröllop 7000 kr \n- Dop: 5000 kr";
     String kontaktuppgifter = "Kontakt: \nVid frågor och funderingar kontakta mig på 070088664 eller julius.plant@gmail.se";
 
-
-    public Information() {
+    public void skrivUtInformation() {
         System.out.println("Information\n"  + reglerOchVillkor + "\n" + prislista + "\n" + kontaktuppgifter);
     }
 

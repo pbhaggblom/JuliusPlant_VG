@@ -1,11 +1,25 @@
 public class Facade {
 
+    Portfolio portfolio;
+    Information information;
     Kalender kalender;
     Recensioner recensioner;
 
-    public Facade(Kalender kalender, Recensioner recensioner) {
+    public Facade(Portfolio portfolio, Information information, Kalender kalender, Recensioner recensioner) {
+        this.portfolio = portfolio;
+        this.information = information;
         this.kalender = kalender;
         this.recensioner = recensioner;
+    }
+
+    public void visaPortfolio() {
+        portfolio.skrivUtPortfolio();
+        portfolio.gåTillMeny();
+    }
+
+    public void visaInformation() {
+        information.skrivUtInformation();
+        information.gåTillMeny();
     }
 
     public void recensionsMeny() {
@@ -18,18 +32,21 @@ public class Facade {
         } else {
             throw new IllegalArgumentException();
         }
+        recensioner.gåTillMeny();
     }
 
     public void kalenderMeny() {
         kalender.läsInBokningar();
         int val = kalender.meny();
         if (val == 1) {
+            kalender.hittaLedigaTider();
             kalender.boka();
         } else if (val == 2) {
             kalender.avboka();
         } else {
             throw new IllegalArgumentException();
         }
+        kalender.gåTillMeny();
     }
 
 

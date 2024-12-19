@@ -1,25 +1,38 @@
+import javax.sound.sampled.Port;
+
 public class Main {
 
     public Main() {
+        Portfolio portfolio = new Portfolio();
+        Information information = new Information();
         Kalender kalender = new Kalender();
         Recensioner recensioner = new Recensioner();
 
-        Facade fasad = new Facade(kalender, recensioner);
-        visaMeny();
-        int val = Input.läsMenyVal(4);
+        Facade fasad = new Facade(portfolio, information, kalender, recensioner);
 
-        switch (val) {
-            case 3:
-                fasad.recensionsMeny();
-                break;
-            case 4:
-                fasad.kalenderMeny();
-                break;
-            default:
-                throw new IllegalArgumentException();
+        while (true) {
+            visaMeny();
+            int val = Input.läsMenyVal(5);
+
+            switch (val) {
+                case 1:
+                    fasad.visaPortfolio();
+                    break;
+                case 2:
+                    fasad.visaInformation();
+                    break;
+                case 3:
+                    fasad.recensionsMeny();
+                    break;
+                case 4:
+                    fasad.kalenderMeny();
+                    break;
+                case 5:
+                    System.exit(0);
+                default:
+                    throw new IllegalArgumentException();
+            }
         }
-
-
     }
 
     private void visaMeny() {
@@ -29,7 +42,8 @@ public class Main {
         System.out.println("1. Portfolion\n" +
                 "2. Information\n" +
                 "3. Recensioner\n" +
-                "4. Boka/avboka tid\n");
+                "4. Boka/avboka tid\n" +
+                "5. Avsluta");
     }
 
     public static void main(String[] args) {
