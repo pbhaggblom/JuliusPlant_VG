@@ -44,7 +44,7 @@ public class Main {
         System.out.println("1. Portfolion\n" +
                 "2. Information\n" +
                 "3. Recensioner\n" +
-                "4. Boka/avboka tid\n" +
+                "4. Bokningar\n" +
                 "5. Avsluta");
     }
 

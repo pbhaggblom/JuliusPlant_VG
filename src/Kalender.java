@@ -14,8 +14,8 @@ public class Kalender extends Sida {
     }
 
     public int meny() {
-        System.out.println("Vill du: \n1. Boka\n2. Avboka\n3. Omboka");
-        return Input.läsMenyVal(3);
+        System.out.println("Vill du: \n1. Boka\n2. Avboka\n3. Omboka\n4. Visa bokade tider (administratör)");
+        return Input.läsMenyVal(4);
     }
 
     public void läsInBokningar() {
@@ -112,5 +112,20 @@ public class Kalender extends Sida {
         System.out.println("Välj ett datum:");
         int val = Input.läsMenyVal(ledigaTider.size());
         return ledigaTider.get(val - 1);
+    }
+
+    public void visaBokadeTider() {
+        String lösenord = Input.läsAnvändarInput("Ange lösenord:");
+        if (!lösenord.equals("admin")) {
+            System.out.println("Du har inte behörighet att visa den här sidan");
+            return;
+        }
+        System.out.println("Bokningar: ");
+        for (int i = 0; i < bokningar.size(); i++) {
+            System.out.println("Datum: " + bokningar.get(i).getDatum() +
+                    "\nNamn: " + bokningar.get(i).getNamn() +
+                    "\nMail: " + bokningar.get(i).getMail() +
+                    "\n...................");
+        }
     }
 }

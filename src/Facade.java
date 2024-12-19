@@ -45,6 +45,8 @@ public class Facade {
             kalender.avboka();
         } else if (val == 3) {
             kalender.omboka();
+        } else if (val == 4) {
+            kalender.visaBokadeTider();
         } else {
             throw new IllegalArgumentException();
         }
