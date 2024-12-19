@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class Recensioner extends Sida {
 
-    List<Object> recensioner;
-    Filhanterare filhanterare;
+    ArrayList<Object> recensioner;
+    FilManager manager;
     String filnamn = "recensioner.ser";
 
     public Recensioner() {
         recensioner = new ArrayList<>();
-        filhanterare = new Filhanterare();
-        filhanterare.läsFrånFil(recensioner, filnamn);
 
+        manager = FilManager.INSTANCE;
+        recensioner = manager.läsFrånFil(filnamn);
 
         System.out.println("Recensioner");
         System.out.println("Vill du läsa (1) eller skriva (2) recension?");
@@ -41,7 +41,8 @@ public class Recensioner extends Sida {
         Recension r = new Recension(namn, titel, recension);
         recensioner.add(r);
 
-        filhanterare.skrivTillFil(recensioner, filnamn);
+        manager.skrivTillFil(filnamn, recensioner);
+
     }
 
     public void läsRecension() {
@@ -52,7 +53,6 @@ public class Recensioner extends Sida {
                 System.out.println("Titel: " + r.getTitel());
                 System.out.println("Recension: " + r.getText());
                 System.out.println(".....................................");
-
             }
         }
     }

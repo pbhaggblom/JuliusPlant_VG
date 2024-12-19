@@ -10,6 +10,7 @@ idea/modules.xml
 *.iml
 *.ipr
 *.ser
+*.xml
 ### Eclipse ###
 .apt_generated
 .classpath

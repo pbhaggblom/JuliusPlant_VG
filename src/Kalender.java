@@ -5,15 +5,15 @@ import java.util.Scanner;
 
 public class Kalender extends Sida {
 
-    List<Object> bokningar;
-    Filhanterare filhanterare;
+    ArrayList<Object> bokningar;
+    FilManager manager;
     String filnamn = "bokningar.ser";
 
 
     public Kalender() {
         bokningar = new ArrayList<>();
-        filhanterare = new Filhanterare();
-        filhanterare.läsFrånFil(bokningar, filnamn);
+        manager = FilManager.INSTANCE;
+        manager.läsFrånFil(filnamn);
 
         System.out.println("Vill du: \n1. Boka\n2. Avboka");
         int val = Input.läsMenyVal(2);
@@ -61,8 +61,7 @@ public class Kalender extends Sida {
         String mail = scan.nextLine();
 
         bokningar.add(new Bokning(datum, namn, mail));
-        filhanterare.skrivTillFil(bokningar, filnamn);
-
+        manager.skrivTillFil(filnamn, bokningar);
         System.out.println("Följande bokning registrerades:\nDatum: " + datum + "\nNamn: " + namn + "\nMail: " + mail);
     }
 
@@ -82,6 +81,7 @@ public class Kalender extends Sida {
         if (!bokningHittades) {
             System.out.println("Hittade ingen bokning med angiven mailadress");
         }
-        filhanterare.skrivTillFil(bokningar, filnamn);
+
+        manager.skrivTillFil(filnamn, bokningar);
     }
 }
